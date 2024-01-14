@@ -4,6 +4,7 @@ const bcrypt = require('bcryptjs');
 
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const fetchUser = require('../middleware/fetchUser');
 const router = express.Router();
 
 const JWT_SECRET = "I am Anup";
@@ -102,7 +103,17 @@ router.post('/auth', async(req, res) => {
 })
 
 //Getuser details with token provided. Login required
+router.post('/getUser',fetchUser,async(req,res)=>{
 
+    try {
+        const userId = req.user.id;
+        const user = await Users.findById(userId).select("-password");
+        res.send(user);
+    } catch (error) {
+        console.log(error.message);  // Fix the typo here
+        return res.status(500).send("Internal Server Error");
+    }
+})
 
 
 module.exports = router;
