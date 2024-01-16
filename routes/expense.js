@@ -1,19 +1,21 @@
 
+const fetchUser = require('../middleware/fetchUser.js');
 const { Expense } = require('../models/Expense.js');
 const express = require('express');
 const router = express.Router();
 
 
-router.get('/getAll', async (req, res) => {
-    const expenses = await Expense.find();
+router.get('/getAll', fetchUser, async (req, res) => {
+
+    const expenses = await Expense.find({ user: req.user.id });
     res.status(200).json(expenses)
 });
 
 router.get('/get/:id', async (req, res) => {
     const exp = await Expense.findById(req.params.id);
-    if(!exp){
+    if (!exp) {
         return res.status(500).json({
-            message:"Item not found with that id"
+            message: "Item not found with that id"
         })
     }
     res.status(200).json({
@@ -22,23 +24,24 @@ router.get('/get/:id', async (req, res) => {
     })
 });
 
-router.post('/new', async (req, res) => {
+router.post('/new', fetchUser, async (req, res) => {
     try {
         if (
             !req.body.title ||
             !req.body.amount ||
-            !req.body.date 
+            !req.body.date
         ) {
             return res.status(400).send({
                 message: 'Send all required fields: title, amount, date',
             });
         }
         const newExpense = {
+            user: req.user.id,
             title: req.body.title,
             amount: req.body.amount,
             date: req.body.date,
-            purpose:req.body.purpose,
-            type:req.body.type
+            purpose: req.body.purpose,
+            type: req.body.type
         };
 
 
@@ -96,4 +99,4 @@ router.delete("/delete/:id", async (req, res) => {
     })
 });
 
-module.exports =router;
+module.exports = router;

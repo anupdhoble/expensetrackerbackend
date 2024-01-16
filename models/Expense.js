@@ -1,6 +1,10 @@
 const mongoose = require("mongoose")
 
 const expenseSchema = new mongoose.Schema({
+    user:{ //similar to foreign key in sql
+        type:mongoose.Schema.Types.ObjectId,
+        ref:'Users'
+    },
     title: String,
     amount: Number,
     date: String,
