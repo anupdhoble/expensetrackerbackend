@@ -9,7 +9,7 @@ app.use(bodyParser.json());//parser text from body really helpfull
 app.use(cors());
 const PORT = process.env.PORT || 5000;
 // -->> mongodb://expensetrackerdb:BndFF12z2muUYvM83alenXICUMJL7j9fiO5xU1yK3DpM8bVsowMUKuRBWOvkHx5bIbxqny9Ij0S8ACDbTM5JNQ==@expensetrackerdb.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&maxIdleTimeMS=120000&appName=@expensetrackerdb@
-mongoose.connect("mongodb://expensetrackerdb:BndFF12z2muUYvM83alenXICUMJL7j9fiO5xU1yK3DpM8bVsowMUKuRBWOvkHx5bIbxqny9Ij0S8ACDbTM5JNQ==@expensetrackerdb.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&maxIdleTimeMS=120000&appName=@expensetrackerdb@").then(() => {
+mongoose.connect("mongodb://149.129.188.18:27017/").then(() => {
     console.log('App connected to database');
     app.listen(PORT, () => {
         console.log(`App is running on port:${PORT}`);
